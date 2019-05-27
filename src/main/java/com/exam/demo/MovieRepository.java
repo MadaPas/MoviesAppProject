@@ -79,9 +79,9 @@ public class MovieRepository {
                 ps.setString(2, movie.getDirSurname());
                 ps.setString(3, movie.getDirForename());
                 ps.setInt(4, movie.getReleaseDate());
-                ps.setString(4, movie.getGenre());
-                ps.setDouble(4, movie.getRating());
-                ps.setInt(4, movie.getDuration());
+                ps.setString(5, movie.getGenre());
+                ps.setDouble(6, movie.getRating());
+                ps.setInt(7, movie.getDuration());
 
                 return ps;
             }

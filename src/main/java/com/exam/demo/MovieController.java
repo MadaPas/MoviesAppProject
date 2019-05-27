@@ -16,9 +16,6 @@ import java.util.List;
 public class MovieController {
 
     @Autowired // Handle this field and create the object that needs to be created
-    private JdbcTemplate jdbc;
-
-    @Autowired
     private MovieRepository movieRepo;
 
     private static List<Movie> movieList = new ArrayList<>();
@@ -41,6 +38,19 @@ public class MovieController {
         return "edit-movie";
     }
 
+    @GetMapping(value = "/movies/add_movie")
+    public String addMovie (Model model) {
+        model.addAttribute("newMovie", new Movie ());
+        return "add-movie";
+    }
+
+    @PostMapping(value = "/movies/add_movie")
+    public String handleAddMovie (@ModelAttribute Movie movie) {
+        movie = movieRepo.insert(movie);
+        movieList.add(movie);
+        return "redirect:/movies";
+    }
+
     // Delete movie from MySQL database  and redirect back to /mymovie
     @GetMapping(value = "/movies/delete/{index}")
     public String handleDeleteMovie(@PathVariable int index) {
@@ -52,7 +62,7 @@ public class MovieController {
     // Add movie to MySQL database
     // Can also use @PostMapping which is short for the @RequestMapping with RequestMethod.POST
     @PostMapping(value = "/movies")
-    public String handleAddMovie(@ModelAttribute Movie movie) {
+    public String handleAddMovie1(@ModelAttribute Movie movie) {
         //movieList.add(movie);
         movieRepo.saveMovie(movie);
 

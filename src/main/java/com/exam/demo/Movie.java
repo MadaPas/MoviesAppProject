@@ -13,16 +13,6 @@ public class Movie {
     private int duration;
 
     public Movie () {}
-//    public Movie(int id, String name, String dirSurname, String dirForename, int releaseDate, String genre, double rating, int duration) {
-//        this.id = id;
-//        this.name = name;
-//        this.dirSurname = dirSurname;
-//        this.dirForename = dirForename;
-//        this.releaseDate = releaseDate;
-//        this.genre = genre;
-//        this.rating = rating;
-//        this.duration = duration;
-//    }
 
     public int getId() {
         return id;
