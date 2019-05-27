@@ -43,7 +43,7 @@ public class MovieRepository {
 
     // Find all movies from database table movies
     public List<Movie> findAllMovies() {
-        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM movies");
+        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM movie");
         List<Movie> movieList = new ArrayList<>();
         while (rs.next()) {
             Movie movie = new Movie();
@@ -62,7 +62,7 @@ public class MovieRepository {
 
     // Adding a movie to the MySQL database with JDBCtemplate.update
     public void saveMovie(Movie movie) {
-        String query = String.format("INSERT INTO movies (name, dir_surname, dir_forename, release_date, genre, rating, duration) " +
+        String query = String.format("INSERT INTO movie (name, dir_surname, dir_forename, release_date, genre, rating, duration) " +
                         " VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
                 movie.getName(), movie.getDirSurname(), movie.getDirForename(), movie.getReleaseDate(), movie.getGenre(), movie.getRating(), movie.getDuration());
         jdbc.update(query);
@@ -74,7 +74,7 @@ public class MovieRepository {
         PreparedStatementCreator ps = new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO movies VALUES (null, ?, ?, ?, ?, ?, ?, ?)", new String[]{"id"});
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO movie VALUES (null, ?, ?, ?, ?, ?, ?, ?)", new String[]{"id"});
                 ps.setString(1, movie.getName());
                 ps.setString(2, movie.getDirSurname());
                 ps.setString(3, movie.getDirForename());
@@ -96,13 +96,13 @@ public class MovieRepository {
 
     // Deleting a movie inside the MySQL database with JDBCtemplate.update
     public void deleteMovie(Movie movie) {
-        String query = "DELETE * FROM movie WHERE id = " + movie.getId();
+        String query = "DELETE FROM movie WHERE id = " + movie.getId();
         jdbc.update(query);
     }
 
     // Editing a movie inside the MySQL database with JDBCtemplate.update
     public void editMovie(Movie movie1, Movie movie2) {
-        String query = String.format(("UPDATE movies "
+        String query = String.format(("UPDATE movie "
                         + "SET name = '%s', "
                         + "dir_surname = '%s', "
                         + "dir_forename = '%s', "
