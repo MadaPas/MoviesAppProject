@@ -46,22 +46,24 @@
 <table class="table table-striped">
     <thead>
     <th class="col">Movie Name</th>
-    <th class="col">Director surname</th>
-    <th class="col">Director forename</th>
+    <th class="col">Director name</th>
     <th class="col">Genre</th>
     <th class="col">Release Date</th>
     <th class="col">Rating</th>
+    <th class="col">It is series</th>
+    <th class="col">No of episodes</th>
     <th class="col">Duration</th>
     <th class="col">Edit Movie</th>
     <th class="col">Delete Movie</th>
     </thead>
     <tr th:each="movie, iter : ${movies}">
         <td th:text="${movie.name}"></td>
-        <td th:text="${movie.dirSurname}"> </td>
-        <td th:text="${movie.dirForename}"></td>
-        <td th:text="${movie.releaseDate}"></td>
+        <td th:text="${movie.dirName}"></td>
         <td th:text="${movie.genre}"></td>
+        <td th:text="${movie.releaseDate}"></td>
         <td th:text="${movie.rating}"></td>
+        <td th:text="${movie.isSeries}"></td>
+        <td th:text="${movie.noEpisodes}"></td>
         <td th:text="${movie.duration}"></td>
         <td><a th:href="@{'/movies/edit/' + ${iter.index}}" class="btn btn-info fas fa-pen"></a></td>
         <td><a th:href="@{'/movies/delete/' + ${iter.index}}" class="btn btn-danger fas fa-trash"></a></td>

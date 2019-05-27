@@ -30,12 +30,13 @@ public class MovieRepository {
 //        while (rs.next()) {
 //            movie.setId(rs.getInt("id"));
 //            movie.setName(rs.getString("name"));
-//            movie.setDirSurname(rs.getString("dir_surname"));
-//            movie.setDirForename(rs.getString("dir_forename"));
+//            movie.setDirName(rs.getString("dir_name"));
 //            movie.setReleaseDate(rs.getInt("release_date"));
 //            movie.setGenre(rs.getString("genre"));
 //            movie.setRating(rs.getDouble("rating"));
-//            movie.setDuration(rs.getInt("duration"));
+//            movie.setIsSeries(rs.getString("is_series"));
+//            movie.setNoEpisodes(rs.getInt("no_episodes"));
+//            movie.setDuration(rs.getInt("episode_duration"));
 //
 //        }
 //            return movie;
@@ -49,12 +50,13 @@ public class MovieRepository {
             Movie movie = new Movie();
             movie.setId(rs.getInt("id"));
             movie.setName(rs.getString("name"));
-            movie.setDirSurname(rs.getString("dir_surname"));
-            movie.setDirForename(rs.getString("dir_forename"));
+            movie.setDirName(rs.getString("dir_name"));
             movie.setReleaseDate(rs.getInt("release_date"));
             movie.setGenre(rs.getString("genre"));
             movie.setRating(rs.getDouble("rating"));
-            movie.setDuration(rs.getInt("duration"));
+            movie.setIsSeries(rs.getString("is_series"));
+            movie.setNoEpisodes(rs.getInt("no_episodes"));
+            movie.setDuration(rs.getInt("episode_duration"));
             movieList.add(movie);
         }
         return movieList;
@@ -62,9 +64,9 @@ public class MovieRepository {
 
     // Adding a movie to the MySQL database with JDBCtemplate.update
     public void saveMovie(Movie movie) {
-        String query = String.format("INSERT INTO movie (name, dir_surname, dir_forename, release_date, genre, rating, duration) " +
-                        " VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-                movie.getName(), movie.getDirSurname(), movie.getDirForename(), movie.getReleaseDate(), movie.getGenre(), movie.getRating(), movie.getDuration());
+        String query = String.format("INSERT INTO movie (name, dir_name, release_date, genre, rating, is_series, no_episodes, episode_duration) " +
+                        " VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+                movie.getName(), movie.getDirName(), movie.getReleaseDate(), movie.getGenre(), movie.getRating(), movie.getIsSeries(), movie.getNoEpisodes(), movie.getDuration());
         jdbc.update(query);
     }
 
@@ -74,14 +76,15 @@ public class MovieRepository {
         PreparedStatementCreator ps = new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO movie VALUES (null, ?, ?, ?, ?, ?, ?, ?)", new String[]{"id"});
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO movie VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?)", new String[]{"id"});
                 ps.setString(1, movie.getName());
-                ps.setString(2, movie.getDirSurname());
-                ps.setString(3, movie.getDirForename());
-                ps.setInt(4, movie.getReleaseDate());
-                ps.setString(5, movie.getGenre());
-                ps.setDouble(6, movie.getRating());
-                ps.setInt(7, movie.getDuration());
+                ps.setString(2, movie.getDirName());
+                ps.setInt(3, movie.getReleaseDate());
+                ps.setString(4, movie.getGenre());
+                ps.setDouble(5, movie.getRating());
+                ps.setString(6, movie.getIsSeries());
+                ps.setInt(7, movie.getNoEpisodes());
+                ps.setInt(8, movie.getDuration());
 
                 return ps;
             }
@@ -104,15 +107,16 @@ public class MovieRepository {
     public void editMovie(Movie movie1, Movie movie2) {
         String query = String.format(("UPDATE movie "
                         + "SET name = '%s', "
-                        + "dir_surname = '%s', "
-                        + "dir_forename = '%s', "
+                        + "dir_name = '%s', "
                         + "release_date = '%s', "
                         + "genre = '%s', "
                         + "rating = '%s', "
-                        + "duration = '%s' "
+                        + "is_series = '%s', "
+                        + "no_episodes = '%s', "
+                        + "episode_duration = '%s' "
                         + "WHERE id = %s"),
 
-                movie1.getName(), movie1.getDirSurname(), movie1.getDirForename(), movie1.getReleaseDate(), movie1.getGenre(), movie1.getRating(), movie1.getDuration(), movie2.getId());
+                movie1.getName(), movie1.getDirName(), movie1.getReleaseDate(), movie1.getGenre(), movie1.getRating(), movie1.getIsSeries(), movie1.getNoEpisodes(), movie1.getDuration(), movie2.getId());
         jdbc.update(query);
     }
 }

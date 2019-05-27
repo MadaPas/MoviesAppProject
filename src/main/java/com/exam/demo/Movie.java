@@ -5,11 +5,12 @@ public class Movie {
 
     private int id;
     private String name;
-    private String dirSurname;
-    private String dirForename;
+    private String dirName;
     private int releaseDate;
     private String genre;
     private double rating;
+    private String isSeries;
+    private int noEpisodes;
     private int duration;
 
     public Movie () {}
@@ -18,60 +19,68 @@ public class Movie {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getDirSurname() {
-        return dirSurname;
-    }
-
-    public String getDirForename() {
-        return dirForename;
-    }
-
-    public int getReleaseDate() {
-        return releaseDate;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setDirSurname(String dirSurname) {
-        this.dirSurname = dirSurname;
+    public String getDirName() {
+        return dirName;
     }
 
-    public void setDirForename(String dirForename) {
-        this.dirForename = dirForename;
+    public void setDirName(String dirName) {
+        this.dirName = dirName;
+    }
+
+    public int getReleaseDate() {
+        return releaseDate;
     }
 
     public void setReleaseDate(int releaseDate) {
         this.releaseDate = releaseDate;
     }
 
+    public String getGenre() {
+        return genre;
+    }
+
     public void setGenre(String genre) {
         this.genre = genre;
     }
 
+    public double getRating() {
+        return rating;
+    }
+
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    public String getIsSeries() {
+        return isSeries;
+    }
+
+    public void setIsSeries(String isSeries) {
+        this.isSeries = isSeries;
+    }
+
+    public int getNoEpisodes() {
+        return noEpisodes;
+    }
+
+    public void setNoEpisodes(int noEpisodes) {
+        this.noEpisodes = noEpisodes;
+    }
+
+    public int getDuration() {
+        return duration;
     }
 
     public void setDuration(int duration) {
@@ -82,11 +91,12 @@ public class Movie {
     public String toString() {
         return "Movie{" +
                 "name='" + name + '\'' +
-                ", dirSurname='" + dirSurname + '\'' +
-                ", dirForename='" + dirForename + '\'' +
+                ", dirName='" + dirName + '\'' +
                 ", releaseDate=" + releaseDate +
                 ", genre='" + genre + '\'' +
                 ", rating=" + rating +
+                ", isSeries='" + isSeries + '\'' +
+                ", noEpisodes='" + noEpisodes +
                 ", duration=" + duration +
                 '}';
     }
