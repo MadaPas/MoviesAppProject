@@ -22,26 +22,6 @@ public class MovieRepository {
     private JdbcTemplate jdbc;
 
 
-//    // find specific movie in table movies from database imovie by id
-//    public Movie findMovie(int id) {
-//        // Create query for sql and parse an object into class
-//        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM movies_app WHERE id = " + id);
-//        Movie movie = new Movie();
-//        while (rs.next()) {
-//            movie.setId(rs.getInt("id"));
-//            movie.setName(rs.getString("name"));
-//            movie.setDirName(rs.getString("dir_name"));
-//            movie.setReleaseDate(rs.getInt("release_date"));
-//            movie.setGenre(rs.getString("genre"));
-//            movie.setRating(rs.getDouble("rating"));
-//            movie.setIsSeries(rs.getString("is_series"));
-//            movie.setNoEpisodes(rs.getInt("no_episodes"));
-//            movie.setDuration(rs.getInt("episode_duration"));
-//
-//        }
-//            return movie;
-//    }
-
     // Find all movies from database table movies
     public List<Movie> findAllMovies() {
         SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM movie");
@@ -99,24 +79,51 @@ public class MovieRepository {
 
     // Deleting a movie inside the MySQL database with JDBCtemplate.update
     public void deleteMovie(Movie movie) {
-        String query = "DELETE FROM movie WHERE id = " + movie.getId();
-        jdbc.update(query);
+
+        PreparedStatementCreator ps = new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement("DELETE FROM movie WHERE id = ?");
+                ps.setInt(1, movie.getId());
+
+                return ps;
+            }
+        };
+
+        jdbc.update(ps);
+
     }
 
     // Editing a movie inside the MySQL database with JDBCtemplate.update
     public void editMovie(Movie movie1, Movie movie2) {
-        String query = String.format(("UPDATE movie "
-                        + "SET name = '%s', "
-                        + "dir_name = '%s', "
-                        + "release_date = '%s', "
-                        + "genre = '%s', "
-                        + "rating = '%s', "
-                        + "is_series = '%s', "
-                        + "no_episodes = '%s', "
-                        + "episode_duration = '%s' "
-                        + "WHERE id = %s"),
+        PreparedStatementCreator ps = new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement("UPDATE movie SET " +
+                        "name = ?, " +
+                        "dir_name = ?, " +
+                        "release_date = ?, " +
+                        "genre = ?, " +
+                        "rating = ?, " +
+                        "is_series = ?, " +
+                        "no_episodes = ?, " +
+                        "episode_duration = ? " +
+                        "WHERE id = ?");
+                ps.setString(1, movie1.getName());
+                ps.setString(2, movie1.getDirName());
+                ps.setInt(3, movie1.getReleaseDate());
+                ps.setString(4, movie1.getGenre());
+                ps.setDouble(5, movie1.getRating());
+                ps.setString(6, movie1.getIsSeries());
+                ps.setInt(7, movie1.getNoEpisodes());
+                ps.setInt(8, movie1.getDuration());
+                ps.setInt(9, movie2.getId());
 
-                movie1.getName(), movie1.getDirName(), movie1.getReleaseDate(), movie1.getGenre(), movie1.getRating(), movie1.getIsSeries(), movie1.getNoEpisodes(), movie1.getDuration(), movie2.getId());
-        jdbc.update(query);
+                return ps;
+            }
+        };
+
+        jdbc.update(ps);
+
     }
 }

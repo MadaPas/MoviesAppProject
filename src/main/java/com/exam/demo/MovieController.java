@@ -58,15 +58,6 @@ public class MovieController {
         return "redirect:/movies";
     }
 
-    // Add movie to MySQL database
-    // Can also use @PostMapping which is short for the @RequestMapping with RequestMethod.POST
-    @PostMapping(value = "/movies")
-    public String handleAddMovie1(@ModelAttribute Movie movie) {
-        //movieList.add(movie);
-        movieRepo.saveMovie(movie);
-
-        return "redirect:/movies";
-    }
 
     @PostMapping(value = "/savemovie")
     public String saveMovie(@ModelAttribute Movie movie) {
