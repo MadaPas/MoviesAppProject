@@ -50,7 +50,7 @@ public class MovieController {
         return "redirect:/movies";
     }
 
-    // Delete movie from MySQL database  and redirect back to /mymovie
+    // Delete movie from MySQL database and redirect back to /movies
     @GetMapping(value = "/movies/delete/{index}")
     public String handleDeleteMovie(@PathVariable int index) {
 //        movieList.remove(index);
@@ -65,7 +65,7 @@ public class MovieController {
         return "redirect:/movies";
     }
 
-    // Edit movie from MySQL database and redirect back to /mymovie
+    // Edit movie from MySQL database and redirect back to /movies
     @PostMapping(value = "/movies/edit/{index}")
     public String handleEditMovie(@PathVariable int index, @ModelAttribute Movie movie) {
 //        movieList.set(index, movie);
