@@ -50,7 +50,6 @@ public class MovieRepository {
         jdbc.update(query);
     }
 
-    // Alex's version with PreparedStatement
     public Movie insert(Movie movie) {
 
         PreparedStatementCreator ps = new PreparedStatementCreator() {
